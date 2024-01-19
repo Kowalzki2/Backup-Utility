@@ -1,44 +1,11 @@
 # Backup-Utility
-This script  automates the regular backup process for specified directories on a Linux server. It creates timestamped backup files. For educational purposes only.
 
+Para este ejercicio se utilizo un ambiente virtualizado de 2 VM con kali linux, ambas maquinas fueron creadas en una red NAT con una direccion MAC diferente para cada una asi de esta forma podian tomar una direccion IP en automatico mediante el protocolo DHCP.
 
+Una vez ambas maquinas se vieron en la red, se procede a generar una clave publica del protocolo SSH para una autenticacion automatica utilizando el comando ssh-keygen en el servidor 1. Generada la clave publica se envia la misma al servidor 2 con el siguiente comando ssh-copy-id kali@192.168.20.5, de esta forma se copiará automáticamente la clave pública del servidor 1 al archivo ~/.ssh/authorized_keys del usuario kali en el servidor 2, donde previamente se habia creado el archivo authorized_keys con el comando touch ~/.ssh/authorized_keys.
 
+Con el comando ssh kali@192.168.20.5 se pudo comprobar la conexion automatica desde el servidor 1 al servidor 2.
 
+En el bash solo se agrego la conexion ssh para la transmision de los archivos.
 
-How it works?
-
-
-
-Prepare the Environment:
-Ensure you have access to a Linux server or a Linux machine where you want to perform backups.
-Create the Script:
-Use a text editor such as nano or vi to create the script. You can copy and paste the script code I mentioned earlier. For example:
-bash
-Copy code
-nano backup.sh
-Then, paste the script code into the text editor and save it.
-Give Execute Permissions to the Script:
-Run the following command to give execute permissions to the script:
-bash
-Copy code
-chmod +x backup.sh
-Set the Paths:
-In the script, make sure to modify the origin and destination variables with the paths of the directories you want to back up and the location where you want to store the backups.
-Manually Run the Script:
-To manually run the script and perform a backup, simply execute the following command:
-bash
-Copy code
-./backup.sh
-The script will compress the files from the source directory and create a backup in the destination directory.
-Schedule Automatic Execution (Optional):
-If you want the script to run automatically at regular intervals, you can schedule it using the cron utility. To edit the cron table, run:
-bash
-Copy code
-crontab -e
-Then, add a line like this to schedule daily execution at a specific time:
-bash
-Copy code
-0 2 * * * /path/to/backup/script.sh
-This will run the script every day at 2:00 AM. Adjust the values to suit your specific needs.
-Remember to customize the paths and scheduling according to your specific requirements and setup. This script is a basic example, and you can customize it to fit your environment and needs.
-
+En el video adjunto, se configuro una tarea en crontab que se ejecuta cada 1 minuto para las pruebas donde se ejecuta correctamente y envia los archivos comprimidos al servidor 2.
